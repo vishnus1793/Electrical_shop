@@ -289,6 +289,7 @@ const CustomerDashboard = () => {
       console.error('Error adding to cart:', error);
     }
   };
+  
 
   const addMoneyToWallet = async (amount: number) => {
     try {
@@ -364,7 +365,7 @@ const CustomerDashboard = () => {
         <Tabs defaultValue="profile" value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="mb-8">
             <TabsTrigger value="profile">Profile</TabsTrigger>
-            <TabsTrigger value="cart">My Cart ({cartItems.length})</TabsTrigger>
+            <TabsTrigger value="cart">My Cart (4)</TabsTrigger>
             <TabsTrigger value="wishlist">Wishlist</TabsTrigger>
             <TabsTrigger value="viewed">Recently Viewed</TabsTrigger>
             <TabsTrigger value="inquiries">My Inquiries</TabsTrigger>
@@ -392,24 +393,27 @@ const CustomerDashboard = () => {
                       </div> */}
                       <div className="flex justify-between">
                         <span className="text-gray-600">Phone:</span>
-                        <span>{userInfo?.phone || "N/A"}</span>
+                        <span>{userInfo?.phone || "7397286386"}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Address:</span>
-                        <span className="text-right">{userInfo?.address || "N/A"}</span>
-                      
+                        <span className="text-right">{userInfo?.address || "-"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-600">Wallet:</span>
+                        <span className="font-bold text-purple-600">2</span>
+                      </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Reward Points:</span>
                         <span className="font-bold text-purple-600">250 points</span>
                       </div>
-                    </div>
                   </CardContent>
                   <CardFooter className="flex flex-col space-y-2">
                     <Button variant="outline" className="w-full">
                       Edit Profile
                     </Button>
                     <Button variant="outline" className="w-full bg-green-50 text-green-700 hover:bg-green-100">
-                      Add Money to Wallet
+                      <a href="https://pay-palace-glow.vercel.app/">Add Money to Wallet</a>
                     </Button>
                   </CardFooter>
                 </Card>
@@ -494,19 +498,36 @@ const CustomerDashboard = () => {
 
           <TabsContent value="cart">
           <Card>
-      <CardHeader>
-        <div className="flex items-center justify-between w-full">
-          <div>
-            <CardTitle>My Cart</CardTitle>
-            <CardDescription>Items you've added to your cart</CardDescription>
-          </div>
-          <a href="https://pay-palace-glow.vercel.app/">
-            <Button className="bg-green-600 hover:bg-green-700 text-white">
-              Proceed to Pay
-            </Button>
-          </a>
+          <CardHeader>
+   <div className="flex flex-col w-full">
+      <div className="flex items-center justify-between">
+        <div>
+          <CardTitle>My Cart</CardTitle>
+          <CardDescription>Items you've added to your cart</CardDescription>
         </div>
-      </CardHeader>
+        <a href="https://pay-palace-glow.vercel.app/">
+          <Button className="bg-green-600 hover:bg-green-700 text-white">
+            Proceed to Pay
+          </Button>
+        </a>
+      </div>
+
+      {/* Dynamic Cart Items List */}
+      <ul className="mt-4 space-y-2 text-sm text-gray-700">
+        {cartItems.length === 0 ? (
+          <li>Your cart is empty.</li>
+        ) : (
+          cartItems.map((item) => (
+            <li key={item.id} className="flex justify-between">
+              <span>{item.name}</span>
+              <span>${item.price}</span>
+            </li>
+          ))
+        )}
+      </ul>
+    </div>
+</CardHeader>
+
 
       <CardContent>
         <div className="space-y-6">
